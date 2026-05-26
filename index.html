@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Portfolio</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    :root{
+      --bg:#070b14;
+      --card:#101826;
+      --primary:#00d9ff;
+      --secondary:#7b61ff;
+      --text:#ffffff;
+      --muted:#9ca3af;
+      --glass:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.12);
+      --shadow:0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,var(--primary),transparent 70%);
+      top:-200px;
+      right:-200px;
+      opacity:0.15;
+      z-index:-1;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      width:400px;
+      height:400px;
+      background:radial-gradient(circle,var(--secondary),transparent 70%);
+      bottom:-200px;
+      left:-150px;
+      opacity:0.15;
+      z-index:-1;
+    }
+
+    nav{
+      width:100%;
+      padding:20px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:fixed;
+      top:0;
+      backdrop-filter:blur(14px);
+      background:rgba(0,0,0,0.2);
+      border-bottom:1px solid var(--border);
+      z-index:999;
+    }
+
+    .logo{
+      font-size:1.8rem;
+      font-weight:700;
+      color:white;
+    }
+
+    .logo span{
+      color:var(--primary);
+    }
+
+    nav ul{
+      display:flex;
+      gap:30px;
+      list-style:none;
+    }
+
+    nav ul li a{
+      text-decoration:none;
+      color:white;
+      transition:0.3s;
+      font-weight:500;
+    }
+
+    nav ul li a:hover{
+      color:var(--primary);
+    }
+
+    .btn{
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      color:white;
+      padding:12px 22px;
+      border-radius:30px;
+      text-decoration:none;
+      font-weight:600;
+      transition:0.3s;
+      display:inline-block;
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 10px 25px rgba(0,217,255,0.25);
+    }
+
+    section{
+      min-height:100vh;
+      padding:120px 8%;
+    }
+
+    .hero{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:60px;
+      flex-wrap:wrap;
+    }
+
+    .hero-text{
+      flex:1;
+    }
+
+    .hero-text h3{
+      color:var(--primary);
+      margin-bottom:10px;
+      font-weight:500;
+    }
+
+    .hero-text h1{
+      font-size:4rem;
+      line-height:1.1;
+      margin-bottom:20px;
+    }
+
+    .hero-text p{
+      color:var(--muted);
+      max-width:600px;
+      margin-bottom:30px;
+      line-height:1.8;
+    }
+
+    .hero-img{
+      flex:1;
+      display:flex;
+      justify-content:center;
+    }
+
+    .hero-img .circle{
+      width:350px;
+      height:350px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      padding:8px;
+      animation:float 5s ease-in-out infinite;
+    }
+
+    .hero-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:50%;
+      border:8px solid #0b1120;
+    }
+
+    @keyframes float{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-15px);
+      }
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .section-title h2{
+      font-size:2.8rem;
+      margin-bottom:10px;
+    }
+
+    .section-title p{
+      color:var(--muted);
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:var(--glass);
+      border:1px solid var(--border);
+      padding:35px;
+      border-radius:25px;
+      backdrop-filter:blur(16px);
+      transition:0.4s;
+      box-shadow:var(--shadow);
+    }
+
+    .card:hover{
+      transform:translateY(-10px);
+      border-color:var(--primary);
+    }
+
+    .card i{
+      font-size:2.5rem;
+      color:var(--primary);
+      margin-bottom:20px;
+    }
+
+    .card h3{
+      margin-bottom:15px;
+    }
+
+    .card p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:30px;
+    }
+
+    .project{
+      position:relative;
+      overflow:hidden;
+      border-radius:25px;
+      cursor:pointer;
+    }
+
+    .project img{
+      width:100%;
+      height:100%;
+      display:block;
+      transition:0.5s;
+    }
+
+    .project:hover img{
+      transform:scale(1.1);
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);
+      display:flex;
+      align-items:flex-end;
+      padding:30px;
+    }
+
+    .overlay h3{
+      font-size:1.4rem;
+    }
+
+    .contact-box{
+      max-width:700px;
+      margin:auto;
+      background:var(--glass);
+      border:1px solid var(--border);
+      padding:40px;
+      border-radius:25px;
+      backdrop-filter:blur(14px);
+    }
+
+    .input-group{
+      margin-bottom:20px;
+    }
+
+    input,textarea{
+      width:100%;
+      padding:16px;
+      border:none;
+      outline:none;
+      border-radius:14px;
+      background:#111827;
+      color:white;
+      font-family:inherit;
+    }
+
+    textarea{
+      resize:none;
+      height:140px;
+    }
+
+    footer{
+      text-align:center;
+      padding:30px;
+      color:var(--muted);
+      border-top:1px solid var(--border);
+    }
+
+    .socials{
+      margin-top:25px;
+      display:flex;
+      gap:18px;
+    }
+
+    .socials a{
+      width:45px;
+      height:45px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--glass);
+      border-radius:50%;
+      text-decoration:none;
+      color:white;
+      font-size:1.2rem;
+      transition:0.3s;
+    }
+
+    .socials a:hover{
+      background:var(--primary);
+      transform:translateY(-4px);
+    }
+
+    @media(max-width:900px){
+      .hero{
+        flex-direction:column-reverse;
+        text-align:center;
+      }
+
+      .hero-text h1{
+        font-size:3rem;
+      }
+
+      nav ul{
+        display:none;
+      }
+
+
+      .menu-toggle{
+  display:none;
+  font-size:2rem;
+  cursor:pointer;
+}
+
+@media(max-width:900px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  nav{
+    position:fixed;
+  }
+
+  nav ul{
+    position:absolute;
+    top:80px;
+    right:8%;
+    background:#111827;
+    flex-direction:column;
+    width:220px;
+    padding:25px;
+    border-radius:20px;
+    display:none;
+  }
+
+  nav ul.active{
+    display:flex;
+  }
+
+  .btn{
+    display:none;
+  }
+}
+
+
+.hero-img .circle{
+  box-shadow:
+    0 0 30px rgba(0,217,255,0.4),
+    0 0 60px rgba(123,97,255,0.3);
+}
+    }
+  </style>
+</head>
+<body>
+
+
+
+    <input type="hidden" name="_next" value="thankyou.html">
+
+   
+
+  <!-- NAVBAR -->
+ <nav>
+  <div class="logo">Port<span>folio</span></div>
+
+  <div class="menu-toggle" id="menu-toggle">
+    <i class="ri-menu-3-line"></i>
+  </div>
+
+  <ul id="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a href="#" class="btn">Hire Me</a>
+</nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h3>Hello, I'm</h3>
+      <h1>Muhammed Farooque T S</h1>
+      <p>
+        I’m a creative website developer and video editor crafting visually stunning digital experiences that blend modern design, seamless functionality, and cinematic storytelling.
+
+      </p>
+
+      <a href="#projects" class="btn">View Projects</a>
+
+      <div class="socials">
+        
+        <a href="https://www.linkedin.com/in/muhammed-farooque-t-s-64658137a?utm_source=share_via&utm_content=profile&utm_medium=member_ios"><i class="ri-linkedin-fill"></i></a>
+        <a href="https://www.instagram.com/yys.faarook?igsh=cHlsOG15MTZ5ZG5v&utm_source=qr"><i class="ri-instagram-line"></i></a>
+        <a href="https://www.facebook.com/share/18qoAUNCPm/?mibextid=wwXIfr"><i class="ri-facebook-line"></i></a>
+      </div>
+    </div>
+
+    <div class="hero-img">
+      <div class="circle">
+        <img src="myphoto.jpeg" alt="Muhammed Farooque T S">
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-title">
+      <h2>My Services</h2>
+      <p>What I can do for you</p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <i class="ri-layout-4-line"></i>
+        <h3>Web Design</h3>
+        <p>
+          Beautiful modern UI/UX designs with premium layouts and smooth interactions.
+        </p>
+      </div>
+
+      <div class="card">
+        <i class="ri-code-s-slash-line"></i>
+        <h3>Development</h3>
+        <p>
+          Fast, scalable and responsive websites built with clean code practices.
+        </p>
+      </div>
+
+      <div class="card">
+        <i class="ri-smartphone-line"></i>
+        <h3>Videography & Editing</h3>
+        <p>
+          I create cinematic videography and high-quality edits that transform ideas into visually compelling stories with smooth transitions, professional color grading, and engaging storytelling.
+
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-title">
+      <h2>Featured Projects</h2>
+      <p>Some of my latest works</p>
+    </div>
+
+    <div class="projects">
+
+      <div class="project">
+        <img src="photo.jpeg" alt="">
+        <div class="overlay">
+          <h3>Video Editing</h3>
+        </div>
+      </div>
+
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="">
+        <div class="overlay">
+          <h3>E-Commerce Website</h3>
+        </div>
+      </div>
+
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1200&auto=format&fit=crop" alt="">
+        <div class="overlay">
+          <h3>Portfolio Design</h3>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+ <section id="contact">
+  <div class="section-title">
+    <h2>Contact Me</h2>
+    <p>Let's build something amazing together</p>
+  </div>
+
+  <div class="contact-box">
+
+    <form action="https://formspree.io/f/maqkpnew" method="POST">
+
+      <div class="input-group">
+        <input type="text" name="name" placeholder="Your Name" required>
+      </div>
+
+      <div class="input-group">
+        <input type="email" name="email" placeholder="Your Email" required>
+      </div>
+
+      <div class="input-group">
+        <textarea name="message" placeholder="Your Message" required></textarea>
+      </div>
+
+      <button class="btn" type="submit">
+        Send Message
+      </button>
+
+    </form>
+
+  </div>
+</section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Muhammed Farooque T S. All Rights Reserved.
+  </footer>
+
+  <script>
+
+const menuToggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+    // Navbar shadow on scroll
+    window.addEventListener("scroll", () => {
+      const nav = document.querySelector("nav");
+
+      if(window.scrollY > 50){
+        nav.style.boxShadow = "0 5px 20px rgba(0,0,0,0.3)";
+      } else {
+        nav.style.boxShadow = "none";
+      }
+    });
+
+    
+    // Reveal Animation
+    const cards = document.querySelectorAll(".card, .project");
+
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach((entry)=>{
+        if(entry.isIntersecting){
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0px)";
+        }
+      });
+    },{threshold:0.2});
+
+    cards.forEach((card)=>{
+      card.style.opacity = "0";
+      card.style.transform = "translateY(40px)";
+      card.style.transition = "0.8s ease";
+
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>
